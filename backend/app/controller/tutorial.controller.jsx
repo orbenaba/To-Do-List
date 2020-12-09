@@ -6,7 +6,6 @@ export async function create(req, res) {
   // Validate request
 
   // Create a Tutorial
-  console.log("req.body = ",req.body);
   const tutorial = new Tutorial({
     title: req.body.title,
     published: false
@@ -15,7 +14,7 @@ export async function create(req, res) {
 
   try {
     const data = await tutorial.save();
-    res.send(data);
+    res.send({id: data._id, title:tutorial.title,complete:tutorial.published});
   }
   catch (err) {
     res.status(500).send({
@@ -24,8 +23,6 @@ export async function create(req, res) {
     });
   }
 }
-
-
 
 // Retrieve all Tutorials from the database.
 export async function findAll(req, res) {
@@ -126,7 +123,7 @@ export async function deleteAll(req, res) {
   }
 }
 //Find all published Tutorials
-export async function findAllPublished(req, res) {
+/*export async function findAllPublished(req, res) {
   const data = await Tutorial.find({ published: true })
   try {
     res.send(data);
@@ -137,4 +134,4 @@ export async function findAllPublished(req, res) {
         err.message || "Some error occurred while retrieving tutorials."
     });
   }
-}
+}*/

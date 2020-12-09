@@ -1,5 +1,8 @@
 import React from 'react'
 
+
+//dump component
+
 export default function Header() {
     return (
         <div className="card bg-info text-center text-light rounded-0">

@@ -1,42 +1,39 @@
 import React, { Component } from 'react'
 import axios from 'axios';
-
+import {Consumer} from '../context';
 
 export default class Addtodo extends Component {
-    constructor(props){
-        super(props);
-        this.state={
-            description:"",
-            setState: props.value.setState
-        };
-    }
-    //Note here: the description field in required and validated already ...
-    onSubmit = async(e) =>{
-        await e.preventDefault();
-        try{
-            const res = await axios.post("http://localhost:8080/api/tutorials",{title: this.state.description});
-            //After adding the todo, we need to clean up the input line
-            //Everything is cool
-            this.state.setState({todos: res});
-            this.setState({
-                description:""
-            });
-        }catch(err){
-            console.error(err);
-        }
+   state ={
+        _id:-1,
+        title:"",
+        complete: false
     }
 
-    //listening for each ket-stroke of the user
-    onDescriptionChange = (description)=>{
-        this.setState({description});
-    }
+   update = (e)=>{
+       this.setState({
+           title: e.target.value
+       })
+   }
+
+   add = async(dispatch, e)=>{
+       e.preventDefault();
+       const newTodo = this.state;
+       const res = await axios.post("http://localhost:8080/api/tutorials", {published:this.state.complete, title:this.state.title});
+       dispatch({type:"ADD", payload: res.data});
+       //after adding the new item, we need to update the text-input
+       this.setState({title: ""});
+   }
 
     render() {
         return (
-            <form onSubmit = {this.onSubmit}>
-                <input type="text" className="form-control rounded-0" placeholder="Write your to do here ..." required onChange={e => this.onDescriptionChange(e.target.value)}></input>
-                <button className="form-control rounded-0 btn-secondary" type="submit">Add to-do</button>
-            </form>
+            <Consumer>{value=>{
+                const {dispatch} = value;    
+                return <form onSubmit = {this.add.bind(this,dispatch)}>
+                    <input type="text" className="form-control rounded-0" placeholder="Write your to do here ..." required onChange={this.update} value={this.state.title}></input>
+                    <button className="form-control rounded-0 btn-secondary" type="submit">Add to-do</button>
+                    </form>
+            }}  
+            </Consumer>
         )
     }
 }
