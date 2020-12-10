@@ -1,3 +1,4 @@
+import { date } from "joi";
 import db from "../models";
 const Tutorial = db.tutorials
 
@@ -14,7 +15,7 @@ export async function create(req, res) {
 
   try {
     const data = await tutorial.save();
-    res.send({id: data._id, title:tutorial.title,complete:tutorial.published});
+    res.send(data);
   }
   catch (err) {
     res.status(500).send({
@@ -30,7 +31,9 @@ export async function findAll(req, res) {
   var condition = title ? { title: { $regex: new RegExp(title), $options: "i" } } : {};
   try {
     const data = await Tutorial.find(condition)
-    res.send(data);
+    if(data)
+      res.send(data);
+      ////////////////
   }
   catch (err) {
     res.status(500).send({
@@ -65,7 +68,6 @@ export async function update(req, res) {
   };
 
   const id = req.params.id;
-
   try {
     const data = await Tutorial.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
     if (!data) {
@@ -73,7 +75,9 @@ export async function update(req, res) {
         message: `Cannot update Tutorial with id=${id}. Maybe Tutorial was not found!`
       });
     }
-    else res.send(data);
+    else {
+      res.send(data);
+    }
   }
   catch (err) {
     console.log (err)

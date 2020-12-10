@@ -11,9 +11,8 @@ const reducer = (prevState, action) => {
             return {
                 todos: prevState.todos.map(
                     t => {
-                        console.log("t._id = ",t._id,"\naction.payload = ",action.payload);
                         if (t._id === action.payload) {
-                            t.complete = !t.complete
+                            t.published = !t.published
                         }
                         return t
                     })
@@ -29,6 +28,11 @@ const reducer = (prevState, action) => {
                 todos: [...prevState.todos, action.payload]
             }
         }
+        case "DELETE_ALL":{
+            return {
+                todos: []
+            }
+        }
         default:
             return prevState;
     }
@@ -37,8 +41,8 @@ const reducer = (prevState, action) => {
 
 export class Provider extends Component {
     state ={
-        todos:[]//_id, title, published
-        ,
+        //_id, title, published
+        todos:[],
         dispatch:(action)=>this.setState(prevState => reducer(prevState, action))
     }
 
@@ -57,4 +61,4 @@ export class Provider extends Component {
 }
 
 
-export const Consumer = Context.Consumer
+export const Consumer = Context.Consumer    

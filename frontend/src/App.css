@@ -1,8 +1,23 @@
 .app-container{
   max-width: 35rem;
+  width: 100rem;
   margin: auto;
 }
 
 .empty-list{
-  color: red;
+  color: #0099CC;
+}
+
+.noTodos{
+  font-family: cursive;
+  color: #274752;
+}
+
+.delete-all{
+  position: absolute;
+  font-family: cursive;
+  background-color: red;
+  border-radius: 8rem;
+  top: 7rem;
+  left:72rem;
 }

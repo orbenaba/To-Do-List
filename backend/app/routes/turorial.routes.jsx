@@ -26,7 +26,7 @@ export default function (app) {
   // Delete a Tutorial with id
   router.delete("/:id", tutorialsController.delete);
 
-  // Create a new Tutorial
+  // delete all tutorials
   router.delete("/", tutorialsController.deleteAll);
 
   app.use('/api/tutorials', router);

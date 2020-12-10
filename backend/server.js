@@ -24,6 +24,7 @@ app.get("/", (req, res) => {
   res.json({ message: "Welcome to Rescana team 5 ToDo list." });
 });
 
+
 (async function initDb(){
   try {
     await db.mongoose
@@ -39,6 +40,7 @@ app.get("/", (req, res) => {
     process.exit();
   }
 })();
+
 
 routes(app);
 

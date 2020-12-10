@@ -17,8 +17,8 @@ export default class Addtodo extends Component {
 
    add = async(dispatch, e)=>{
        e.preventDefault();
-       const newTodo = this.state;
-       const res = await axios.post("http://localhost:8080/api/tutorials", {published:this.state.complete, title:this.state.title});
+       //const newTodo = this.state;
+       const res = await axios.post("http://localhost:8080/api/tutorials", {published:false, title:this.state.title});
        dispatch({type:"ADD", payload: res.data});
        //after adding the new item, we need to update the text-input
        this.setState({title: ""});
@@ -29,8 +29,8 @@ export default class Addtodo extends Component {
             <Consumer>{value=>{
                 const {dispatch} = value;    
                 return <form onSubmit = {this.add.bind(this,dispatch)}>
-                    <input type="text" className="form-control rounded-0" placeholder="Write your to do here ..." required onChange={this.update} value={this.state.title}></input>
-                    <button className="form-control rounded-0 btn-secondary" type="submit">Add to-do</button>
+                    <input type="text" className="form-control rounded-0" style={{fontFamily:'cursive'}} placeholder="Write your to do here ..." required minLength="3" maxLength="30" onChange={this.update} value={this.state.title}></input>
+                    <button className="form-control rounded-0 btn-secondary" style={{fontFamily:'cursive'}} type="submit">Add Todo</button>
                     </form>
             }}  
             </Consumer>

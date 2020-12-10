@@ -10,11 +10,15 @@ export default class Todos extends Component {
                 {value =>{
                     const {todos} = value
                     if(todos.length !== 0){
-                        return todos && Array.isArray(todos) && todos.map(t => <Todo todo={t} key={t.id}></Todo>)                        
+                        return todos && Array.isArray(todos) && todos.map(t => <Todo todo={t} key={t._id}></Todo>)                        
                     }
                     else{
                         //The list is empty
-                        return <div className="empty-list">Your list is empty</div>
+                        return <div>
+                                <i className="fas fa-list fa-10x empty-list "></i>
+                                <h3 className="noTodos">You have no Todos</h3>                
+                        </div>
+
                     }
                 }}
             </Consumer>
